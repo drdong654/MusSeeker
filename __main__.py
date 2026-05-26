@@ -5,6 +5,15 @@ from aiogram import Bot, Dispatcher
 from handlers.commands import router as commands_router
 from handlers.download import router as download_router
 from config import TOKEN
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+TOKEN = os.getenv("TOKEN")
+
+if not TOKEN:
+    raise ValueError("TOKEN environment variable is missing")
 
 dp = Dispatcher()
 dp.include_router(commands_router)
