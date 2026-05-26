@@ -1,0 +1,6 @@
+.venv/
+downloads/
+__pycache__/
+.env
+*.mp3
+Заметки.txt
