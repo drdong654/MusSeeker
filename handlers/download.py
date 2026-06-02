@@ -32,7 +32,9 @@ async def mus_download(message: Message):
         return
 
     if not is_supported_url(url):
-        await message.answer("Это не похоже на ссылку. Пришли ссылку на видео.")
+        await message.answer(
+            "Нужна ссылка именно на YouTube (youtube.com или youtu.be)."
+        )
         return
 
     await message.answer("Начинаю скачивание...")
@@ -54,8 +56,11 @@ async def mus_download(message: Message):
         return
 
     audio = FSInputFile(file_path)
-    await message.answer_audio(audio, reply_markup=after_download_keyboard())
-    os.remove(file_path)
+    try:
+        await message.answer_audio(audio, reply_markup=after_download_keyboard())
+    finally:
+        if os.path.exists(file_path):
+            os.remove(file_path)
 
 
 @router.callback_query()
